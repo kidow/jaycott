@@ -1,10 +1,10 @@
-# jaycott
+# Jaycott
 
-> Japan Boycott
+> 일본 브랜드, 얼마나 알고 계신가요?
 
 ## Build Setup
 
-``` bash
+```bash
 # install dependencies
 $ yarn install
 

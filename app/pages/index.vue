@@ -4,7 +4,7 @@
       <div class="card__container" v-for="(item, i) in list" :key="i">
         <div
           class="card__image"
-          :style="{ backgroundImage: `url(${item.src})` }"
+          :style="{ backgroundImage: `url(${item.url})` }"
           @click="cardClick(item)"
         ></div>
         <div class="card__title">
@@ -15,7 +15,7 @@
     </div>
     <el-dialog top="30px" :visible.sync="visible" :width="dialogWidth">
       <span slot="title" style="font-size: 28px; font-weight: bold">{{ item.title }}</span>
-      <p>네무</p>
+      <p>{{ item.description }}</p>
       <span slot="footer" class="dialog-footer">
         <el-button @click="visible = false">닫기</el-button>
       </span>
@@ -26,32 +26,7 @@
 <script>
 export default {
   data: _ => ({
-    list: [
-      {
-        title: '유니클로',
-        src:
-          'https://seeklogo.com/images/U/uniqlo-logo-BDEC351EFB-seeklogo.com.png',
-        category: '의류'
-      },
-      {
-        title: '도요타',
-        src:
-          'https://cdn.pixabay.com/photo/2016/08/15/18/19/toyota-1596082_1280.png',
-        category: '자동차'
-      },
-      {
-        title: '닛산',
-        src:
-          'https://seeklogo.com/images/N/Nissan-logo-4B3C580C8A-seeklogo.com.png',
-        category: '자동차'
-      },
-      {
-        title: '혼다',
-        src:
-          'https://seeklogo.com/images/H/honda-silver-logo-E810C6A8A4-seeklogo.com.jpg',
-        category: '자동차'
-      }
-    ],
+    list: [],
     visible: false,
     item: {}
   }),
@@ -64,6 +39,18 @@ export default {
   computed: {
     dialogWidth() {
       return this.$device.isMobile ? '90%' : '50%'
+    }
+  },
+  async asyncData({ app }) {
+    const options = {
+      url: '/posts',
+      method: 'get'
+    }
+    try {
+      const { data } = await app.$axios(options)
+      return { list: data }
+    } catch (err) {
+      console.log(err)
     }
   }
 }

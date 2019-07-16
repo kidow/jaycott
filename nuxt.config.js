@@ -1,4 +1,6 @@
 const { NODE_ENV } = process.env
+const BASE_URL =
+  NODE_ENV === 'production' ? 'http://jaycott.com' : 'http://localhost:3000'
 
 module.exports = {
   mode: 'universal',
@@ -28,7 +30,21 @@ module.exports = {
 
   modules: ['@nuxtjs/axios', '@nuxtjs/pwa', 'nuxt-device-detect'],
 
-  axios: {},
+  axios: {
+    baseURL: BASE_URL,
+    credentials: true,
+    proxy: false,
+    debug: false,
+    retry: {
+      retries: NODE_ENV === 'production' ? 3 : 0
+    },
+    requestInterceptor: config => {
+      config.headers.common['Authorization'] = ''
+      config.headers.common['Content-Type'] =
+        'application/x-www-form-urlencoded;application/json'
+      return config
+    }
+  },
 
   build: {
     transpile: [/^element-ui/],

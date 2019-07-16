@@ -14,6 +14,8 @@ module.exports = async app => {
       await builder.build()
     }
 
+    app.use('/', require('../../routes'))
+
     app.use(nuxt.render)
     app.listen(port, host)
     console.log(`Server listening on http://${host}:${port}`)

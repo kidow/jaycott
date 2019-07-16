@@ -33,8 +33,26 @@ export default {
     select: ''
   }),
   methods: {
-    onSearch() {
-      console.log(this.search)
+    async onSearch() {
+      // console.log(this.search, 1)
+      const options = {
+        url: '/posts',
+        method: 'get',
+        params: {
+          option: this.select,
+          value: this.search
+        }
+      }
+      try {
+        const { data } = await this.$axios(options)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  },
+  watch: {
+    select() {
+      this.onSearch()
     }
   }
 }

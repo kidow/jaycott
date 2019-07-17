@@ -24,9 +24,9 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   data: _ => ({
-    list: [],
     visible: false,
     item: {}
   }),
@@ -39,16 +39,20 @@ export default {
   computed: {
     dialogWidth() {
       return this.$device.isMobile ? '90%' : '50%'
-    }
+    },
+    ...mapGetters({
+      list: 'GET_LIST'
+    })
   },
-  async asyncData({ app }) {
+  async asyncData({ app, store }) {
     const options = {
       url: '/posts',
       method: 'get'
     }
     try {
       const { data } = await app.$axios(options)
-      return { list: data }
+      store.commit('SAVE_LIST', data)
+      store.commit('SAVE_SEARCH_LIST', data)
     } catch (err) {
       console.log(err)
     }

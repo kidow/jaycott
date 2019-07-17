@@ -1,31 +1,37 @@
 <template>
-  <el-input placeholder="통합검색" v-model="search" class="input-with-select">
+  <el-input
+    placeholder="통합검색"
+    v-model="search"
+    class="input-with-select"
+    suffix-icon="el-icon-search"
+  >
     <el-select v-model="select" slot="prepend" placeholder="모두">
       <el-option
         v-for="option in options"
-        :key="option.id"
+        :key="option.value"
         :label="option.label"
-        :value="option.id"
+        :value="option.value"
       ></el-option>
     </el-select>
   </el-input>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'Input',
   data: _ => ({
     options: [
       {
-        id: 0,
+        value: '모두',
         label: '모두'
       },
       {
-        id: 1,
+        value: '자동차',
         label: '자동차'
       },
       {
-        id: 2,
+        value: '패션',
         label: '패션'
       }
     ],
@@ -33,27 +39,18 @@ export default {
     select: ''
   }),
   methods: {
-    async onSearch() {
-      // console.log(this.search, 1)
-      const options = {
-        url: '/posts',
-        method: 'get',
-        params: {
-          option: this.select,
-          value: this.search
-        }
-      }
-      try {
-        const { data } = await this.$axios(options)
-      } catch (err) {
-        console.log(err)
-      }
-    }
+    onSearch() {}
   },
   watch: {
-    select() {
-      this.onSearch()
+    select(val) {
+      const searchSelect = this.list.filter(item => item.category === val)
+      this.$store.commit('SAVE_LIST', searchSelect)
     }
+  },
+  computed: {
+    ...mapGetters({
+      list: 'GET_LIST'
+    })
   }
 }
 </script>

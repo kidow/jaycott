@@ -49,6 +49,6 @@ module.exports = {
   build: {
     transpile: [/^element-ui/],
 
-    extend(config, ctx) {}
+    extend(config) {}
   }
 }

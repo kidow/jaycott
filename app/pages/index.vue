@@ -28,7 +28,7 @@ import { mapGetters } from 'vuex'
 export default {
   async asyncData({ app, store }) {
     const options = {
-      url: '/posts',
+      url: `${process.env.BASE_URL}/posts`,
       method: 'get'
     }
     try {

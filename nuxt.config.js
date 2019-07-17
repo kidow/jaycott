@@ -1,10 +1,12 @@
 const { NODE_ENV } = process.env
 const BASE_URL =
-  NODE_ENV === 'production' ? 'http://jaycott.com' : 'http://localhost:3000'
+  NODE_ENV === 'production'
+    ? 'https://www.jaycott.com'
+    : 'http://localhost:3000'
 
 module.exports = {
-  mode: 'universal',
   srcDir: 'app/',
+  mode: 'universal',
   head: {
     title: '제이콧',
     meta: [
@@ -18,15 +20,10 @@ module.exports = {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
-
   loading: { color: '#fff' },
-
   css: [{ src: '~assets/index.scss', lang: 'scss' }],
-
   plugins: ['@/plugins/element-ui'],
-
   modules: ['@nuxtjs/axios', '@nuxtjs/pwa', 'nuxt-device-detect'],
-
   axios: {
     baseURL: BASE_URL,
     credentials: true,
@@ -42,10 +39,11 @@ module.exports = {
       return config
     }
   },
-
+  env: {
+    BASE_URL
+  },
   build: {
     transpile: [/^element-ui/],
-
     extend(config) {}
   }
 }

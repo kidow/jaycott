@@ -1,11 +1,10 @@
 require('dotenv').config()
+require('./models')()
 
 const express = require('express')
 const app = express()
 const nuxt = require('./middleware/nuxt')
 
-app.use('/health', (_, res) => res.sendStatus(200))
-
-require('./models')()
+app.all('/health', (_, res) => res.sendStatus(200))
 
 nuxt(app)

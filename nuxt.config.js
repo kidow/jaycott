@@ -5,9 +5,6 @@ const BASE_URL =
 module.exports = {
   mode: 'universal',
   srcDir: 'app/',
-  router: {
-    base: NODE_ENV === 'development' ? '/' : '/jaycott/'
-  },
   head: {
     title: '제이콧',
     meta: [

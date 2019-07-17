@@ -26,6 +26,19 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
+  async asyncData({ app, store }) {
+    const options = {
+      url: '/posts',
+      method: 'get'
+    }
+    try {
+      const { data } = await app.$axios(options)
+      store.commit('SAVE_LIST', data)
+      store.commit('SAVE_SEARCH_LIST', data)
+    } catch (err) {
+      console.log(err)
+    }
+  },
   data: _ => ({
     visible: false,
     item: {}
@@ -43,19 +56,6 @@ export default {
     ...mapGetters({
       list: 'GET_LIST'
     })
-  },
-  async asyncData({ app, store }) {
-    const options = {
-      url: '/posts',
-      method: 'get'
-    }
-    try {
-      const { data } = await app.$axios(options)
-      store.commit('SAVE_LIST', data)
-      store.commit('SAVE_SEARCH_LIST', data)
-    } catch (err) {
-      console.log(err)
-    }
   }
 }
 </script>

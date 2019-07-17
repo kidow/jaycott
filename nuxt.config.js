@@ -39,6 +39,23 @@ module.exports = {
       return config
     }
   },
+  manifest: {
+    name: '제이콧',
+    short_name: '제이콧',
+    start_url: '/?utm_source=homescreen',
+    display: 'standalone',
+    background_color: '#fff'
+  },
+  workbox: {
+    offline: false,
+    runtimeCaching: [
+      {
+        urlPattern: '/*',
+        handler: 'networkFirst',
+        method: 'GET'
+      }
+    ]
+  },
   env: {
     BASE_URL
   },
